@@ -6,7 +6,7 @@ SEQ=15
 SITE=custom
 # SITE=everest
 PKG=${SITE}_sshkeys
-PACKAGES=../../PACKAGES
+PACKAGES=../../PACKAGES.OPT
 
 mkdir -p release opkg
 
