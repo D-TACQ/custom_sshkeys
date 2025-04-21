@@ -8,11 +8,6 @@ SITE=custom
 PKG=${SITE}_sshkeys
 PACKAGES=../../PACKAGES
 
-if [ "$USER" != "root" ]; then
-	echo this script must run as root, please use sudo
-	exit 1
-fi
-
 mkdir -p release opkg
 
 rm -Rf opkg/*
@@ -22,7 +17,7 @@ chmod 700 opkg/root/.ssh
 cp authorized_keys opkg/root/.ssh
 chown -R root:root opkg
 
-tar cvzf release/${SEQ}-${PKG}-${DC}.tgz -C opkg .
+fakeroot tar cvzf release/${SEQ}-${PKG}-${DC}.tgz --owner=0 --group=0 -C opkg .
 # here it is ready to use
 ls -l release/${SEQ}-${PKG}-${DC}.tgz
 
