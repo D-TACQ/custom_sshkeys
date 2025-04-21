@@ -8,11 +8,14 @@ SITE=custom_
 PKG=$SITE_sshkeys
 PACKAGES=../../PACKAGES
 
+mkdir -p release opkg
+
 rm -Rf opkg/*
 mkdir -p opkg/root/.ssh
 chmod 700 opkg/root/.ssh
 
 cp authorized_keys opkg/root/.ssh
+sudo chown -R root.root opkg
 
 tar cvzf release/${SEQ}-${PKG}-${DC}.tgz -C opkg .
 # here it is ready to use
