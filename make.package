@@ -3,10 +3,15 @@
 DC=$(date +%y%m%d%H%M)
 SEQ=15
 # set this to a meaningful name for your site
-SITE=custom_
-# SITE=everest_
-PKG=$SITE_sshkeys
+SITE=custom
+# SITE=everest
+PKG=${SITE}_sshkeys
 PACKAGES=../../PACKAGES
+
+if [ "$USER" != "root" ]; then
+	echo this script must run as root, please use sudo
+	exit 1
+fi
 
 mkdir -p release opkg
 
@@ -15,7 +20,7 @@ mkdir -p opkg/root/.ssh
 chmod 700 opkg/root/.ssh
 
 cp authorized_keys opkg/root/.ssh
-sudo chown -R root.root opkg
+chown -R root:root opkg
 
 tar cvzf release/${SEQ}-${PKG}-${DC}.tgz -C opkg .
 # here it is ready to use
