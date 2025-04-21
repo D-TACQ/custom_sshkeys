@@ -1,0 +1,26 @@
+#!/bin/bash
+# site customisation - ssh keys and .. anything else..
+DC=$(date +%y%m%d%H%M)
+SEQ=15
+# set this to a meaningful name for your site
+SITE=custom_
+# SITE=everest_
+PKG=$SITE_sshkeys
+PACKAGES=../../PACKAGES
+
+rm -Rf opkg/*
+mkdir -p opkg/root/.ssh
+chmod 700 opkg/root/.ssh
+
+cp authorized_keys opkg/root/.ssh
+
+tar cvzf release/${SEQ}-${PKG}-${DC}.tgz -C opkg .
+# here it is ready to use
+ls -l release/${SEQ}-${PKG}-${DC}.tgz
+
+# or, if using our build system, deploy it for next release
+if [ -d $PACKAGES ]; then
+	rm -f ${PACKAGES}/${SEQ}-${PKG}*
+	cp release/${SEQ}-${PKG}-${DC}.tgz ${PACKAGES}
+fi
+
